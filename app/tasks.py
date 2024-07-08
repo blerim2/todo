@@ -33,3 +33,14 @@ def create_task():
     project_id_all = []
     for i in range(0, len(project_arr)):
         project_id_all.append(project_arr[i]["id"])
+        
+    # validate fields, can't use another user project's
+    if project_id not in project_id_all:
+        return jsonify({"message": "Don't have permission to use the project_id"}), 403
+
+    # insert into db
+    task = Task(title=title, description=description, project_id=project_id)
+    db.session.add(task)
+    db.session.commit()
+
+    return jsonify({"message": "Task successfully created"}), 201
