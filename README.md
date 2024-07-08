@@ -1,6 +1,6 @@
 # TODO APP FLASK API
 
-## Backgound
+## Background
 
 This our final project, create a simple todo app using a minimalis frontend (html, css, js and bootstrap framework) with minimalis backend (flask framework).
 
