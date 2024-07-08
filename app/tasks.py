@@ -74,3 +74,23 @@ def get_all_task():
             task_by_project.append(task.serialize())
 
     return jsonify({"data": task_by_project}), 200
+
+@bp.route("/<int:id>", methods=["PUT"])
+@jwt_required()
+def update_task(id):
+    # get request
+    data = request.get_json()
+    title = data.get("title", None)
+    description = data.get("description", None)
+    project_id = data.get("project_id")
+    user_id = get_jwt_identity()
+
+    # validate fileds
+    if not title or not project_id:
+        return jsonify({"message": "Title and Project_ID is required!"}), 400
+
+    # handle err when task not found
+    try:
+        task = db.session.execute(db.select(Task).filter_by(id=id)).scalar_one()
+    except NoResultFound:
+        return jsonify({"message": "Task not found!"}), 404
