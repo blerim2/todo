@@ -1,0 +1,7 @@
+docker.txt
+.venv
+__pycache__
+*.db
+migrations
+images
+script
