@@ -46,3 +46,24 @@ def register():
         200,
     )
 
+@bp.route("/login", methods=["POST"])
+def login():
+    # get request
+    data = request.get_json()
+    email = data.get("email", None)
+    password = data.get("password", None)
+
+    # validation fields
+    if not email or not password:
+        return jsonify({"message": "Email and Password is required!"}), 400
+
+    user = User.query.filter_by(email=email).first()
+
+    # validation, request exists in database
+    if not user or not check_password_hash(user.password, password):
+        return jsonify({"message": "Incorrect Email or Password!"}), 422
+
+    access_token = create_access_token(identity=user.id)
+    # refresh_token = create_refresh_token(identity=user.id)
+
+    return jsonify({"access_token": access_token}), 200
