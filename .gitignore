@@ -1,0 +1,6 @@
+.env
+docker.txt
+.venv
+__pycache__
+*.db
+migrations
