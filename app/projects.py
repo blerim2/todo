@@ -107,15 +107,6 @@ def task_filtered(id):
     # get user_id
     user_id = get_jwt_identity()
 
-    """
-        Logika untuk mendapatkan filter project dengan current user
-        & filter task dengan project yang sudah di filter
-        - Query Project filter_by user yang login (user_id)
-        - Buat array untuk menampung semua Project yang difilter
-          ambil hanya id saja
-        - validasi, user hanya dapat melihat task dari project yang dibuatnya
-    """
-
     # get all projects generated from user
     projects = db.session.execute(
         db.select(Project).filter_by(user_id=user_id)
