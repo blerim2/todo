@@ -67,3 +67,20 @@ def login():
     # refresh_token = create_refresh_token(identity=user.id)
 
     return jsonify({"access_token": access_token}), 200
+
+@bp.route("/logout", methods=["DELETE"])
+@jwt_required()
+def logout():
+    token = get_jwt()
+    jti = token["jti"]
+    db.session.add(TokenBlocklist(jti=jti))
+    db.session.commit()
+    return jsonify({"message": "Successfully logout"}), 200
+
+
+@jwt.token_in_blocklist_loader
+def check_if_token_revoked(jwt_header, jwt_payload: dict) -> bool:
+    jti = jwt_payload["jti"]
+    token = db.session.query(TokenBlocklist.id).filter_by(jti=jti).scalar()
+
+    return token is not None
