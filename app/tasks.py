@@ -109,3 +109,29 @@ def update_task(id):
     # validate fields, can't use another user project's
     if project_id not in project_id_all:
         return jsonify({"message": "Don't have permission to use the project_id"}), 403
+    
+    # get all tasks from filtered project id
+    task_by_project = []
+    for i in range(0, len(project_id_all)):
+        tasks = db.session.execute(
+            db.select(Task).filter_by(project_id=project_id_all[i])
+        ).scalars()
+        for task_ in tasks:
+            task_by_project.append(task_.serialize())
+
+    # get all id of tasks generated from current
+    task_id_all = []
+    for i in range(0, len(task_by_project)):
+        task_id_all.append(task_by_project[i]["id"])
+
+    # validate url paramter, can't modify the task when the user doesn't have it
+    if id not in task_id_all:
+        return jsonify({"message": "Don't have permission to modify this Task"}), 403
+
+    # updating data in db
+    task.title = title
+    task.description = description
+    task.project_id = project_id
+    db.session.commit()
+
+    return jsonify({"message": "Task updated successfully"}), 200
