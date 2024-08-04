@@ -135,3 +135,37 @@ def update_task(id):
     db.session.commit()
 
     return jsonify({"message": "Task updated successfully"}), 200
+
+@bp.route("/<int:id>", methods=["DELETE"])
+@jwt_required()
+def delete_project(id):
+    # get identity
+    user_id = get_jwt_identity()
+
+    # handle err when task not found
+    try:
+        task = db.session.execute(db.select(Task).filter_by(id=id)).scalar_one()
+    except NoResultFound:
+        return jsonify({"message": "Task not found!"}), 404
+
+
+
+    # get all projects generated from user
+    projects = db.session.execute(
+        db.select(Project).filter_by(user_id=user_id)
+    ).scalars()
+
+    # get all ids from projects
+    project_arr = [project.serialize() for project in projects]
+    project_id_all = []
+    for i in range(0, len(project_arr)):
+        project_id_all.append(project_arr[i]["id"])
+
+    # get all tasks from filtered project id
+    task_by_project = []
+    for i in range(0, len(project_id_all)):
+        tasks = db.session.execute(
+            db.select(Task).filter_by(project_id=project_id_all[i])
+        ).scalars()
+        for task_ in tasks:
+            task_by_project.append(task_.serialize())
