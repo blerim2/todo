@@ -1,0 +1,180 @@
+{% extends "base.html" %} {% block title %}Project List{% endblock %} {% block
+    content %}
+    <!-- section project list start -->
+    <section class="container mt-5">
+      <h2 class="text-center">Project List</h2>
+      <div class="row row-cols-1 row-cols-md-3 g-4 mt-2" id="cardWrapper">
+      </div>
+    </section>
+    <!-- section project list end -->
+    
+    <!-- section add-button start -->
+    <div class="d-grid gap-2 col-3 mx-auto mt-3">
+      <button
+        class="btn btn-success"
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#modalProjectAdd"
+      >
+        ADD
+      </button>
+    </div>
+    <!-- section add-button end -->
+    
+    <!-- modal add-project start -->
+    <div class="modal fade" id="modalProjectAdd" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- toast danger start -->
+          <div class="toast align-items-center text-bg-danger position-fixed end-0 top-0" role="alert" aria-live="assertive" aria-atomic="true" id="toastLiveAdd">
+            <div class="d-flex">
+              <div class="toast-body" id="toastBodyAdd">
+              </div>
+              <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+          </div>
+          <!-- toast danger end -->
+          <div class="modal-header">
+            <h1 class="modal-title fs-5">Add New Project</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="formAddProject">
+              <div class="mb-3">
+                <label for="addProjectTitle" class="form-label">Title</label>
+                <input type="text" class="form-control" id="addProjectTitle" />
+              </div>
+              <div class="mb-3">
+                <label for="addProjectDesc" class="form-label">Description</label>
+                <textarea
+                  class="form-control"
+                  id="addProjectDesc"
+                  rows="3"
+                ></textarea>
+              </div>
+              <div class="modal-footer">
+    
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-success">Add Project</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal add-project end -->
+    
+    <!-- modal edit-project start -->
+    <div class="modal fade" id="modalProjectEdit" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- toast danger start -->
+          <div class="toast align-items-center text-bg-danger position-fixed end-0 top-0" role="alert" aria-live="assertive" aria-atomic="true" id="toastLiveEdit">
+            <div class="d-flex">
+              <div class="toast-body" id="toastBodyEdit">
+              </div>
+              <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+          </div>
+          <!-- toast danger end -->
+          <div class="modal-header">
+            <h1 class="modal-title fs-5">Edit New Project</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="formEditProject">
+              <div class="mb-3">
+                <label for="editProjectTitle" class="form-label">Title</label>
+                <input type="text" class="form-control" id="editProjectTitle" />
+              </div>
+              <div class="mb-3">
+                <label for="editProjectDesc" class="form-label"
+                  >Description</label
+                >
+                <textarea
+                  class="form-control"
+                  id="editProjectDesc"
+                  rows="3"
+                ></textarea>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary">Edit Project</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal edit-project end -->
+    
+    <!-- modal delete-project start -->
+    <div
+      class="modal fade"
+      id="modalProjectDelete"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- toast danger start -->
+          <div class="toast align-items-center text-bg-danger position-fixed end-0 top-0" role="alert" aria-live="assertive" aria-atomic="true" id="toastLiveDelete">
+            <div class="d-flex">
+              <div class="toast-body" id="toastBodyDelete">
+              </div>
+              <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+          </div>
+          <!-- toast danger end -->
+    
+          <div class="modal-header">
+            <h1 class="modal-title fs-5">WARNING!</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Apakah Anda yakin menghapus Project ini?</p>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-danger" id="btnProjectDelete">Delete Project</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal delete-project end -->
+    {% endblock%} {% block script %}
+    <script src="{{url_for('static',filename='js/script-project.js')}}"></script>
+    {% endblock %}
