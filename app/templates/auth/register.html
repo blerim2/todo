@@ -1,0 +1,75 @@
+{% extends "auth/base.html" %} {% block title %}Register Page{% endblock %} {%
+    block content %}
+    
+    <!-- section register start -->
+    <div class="container bg-light mt-5 p-3 w-50 rounded">
+      <h2 class="text-center my-3">Register</h2>
+    
+      <!-- toast success start -->
+      <div class="toast align-items-center text-bg-success w-100 mb-2" role="alert" aria-live="assertive" aria-atomic="true" id="toastLiveSuccess">
+        <div class="d-flex">
+          <div class="toast-body" id="toastBodySuccess">
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>
+      <!-- toast success end -->
+    
+      <!-- toast danger start -->
+      <div class="toast align-items-center text-bg-danger w-100 mb-2" role="alert" aria-live="assertive" aria-atomic="true" id="toastLiveDanger">
+        <div class="d-flex">
+          <div class="toast-body" id="toastBodyDanger">
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>
+      <!-- toast danger end -->
+    
+      <form id="registrationForm">
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            placeholder="Enter username"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="Enter email"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            placeholder="Enter password"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label">Confirm Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="confirmPassword"
+            placeholder="Confirm password"
+          />
+        </div>
+    
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary" type="submit" id="liveToastBtn">Register</button>
+          <p class="text-center">Already have an account? <a href="/login">Log in</a></p>
+        </div>
+      </form>
+    </div>
+    <!-- section register end -->
+    {% endblock %} {% block script %}
+    <script src="{{url_for('static',filename='js/script-register.js')}}"></script>
+    {% endblock %}
