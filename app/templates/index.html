@@ -1,0 +1,195 @@
+{% extends "base.html" %} {% block title %}Todo List{% endblock %} {% block
+    content %}
+    <!-- section select-project start -->
+    <section class="container mt-5">
+      <select class="form-select" id="selectProject">
+        <option value="">Select Project</option>
+      </select>
+    </section>
+    <!-- section select-project end -->
+    
+    <!-- section todo start -->
+    <section class="container mt-3">
+      <div class="row">
+        <div class="col card pt-3 px-3 mx-3" id="todoItem">
+          <h2>TODO</h2>
+        </div>
+        <div class="col card pt-3 px-3 mx-3" id="doneItem">
+          <h2>DONE</h2>
+        </div>
+      </div>
+    </section>
+    <!-- section todo end -->
+    
+    <!-- section add-button start -->
+    <div class="d-grid gap-2 col-3 mx-auto mt-3">
+      <button
+        class="btn btn-success"
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#modalTaskAdd"
+      >
+        ADD
+      </button>
+    </div>
+    <!-- section add-button end -->
+    
+    <!-- modal add-task start -->
+    <div class="modal fade" id="modalTaskAdd" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- toast danger start -->
+          <div class="toast align-items-center text-bg-danger position-fixed end-0 top-0" role="alert" aria-live="assertive" aria-atomic="true" id="toastLiveAdd">
+            <div class="d-flex">
+              <div class="toast-body" id="toastBodyAdd">
+              </div>
+              <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+          </div>
+          <!-- toast danger end -->
+          <div class="modal-header">
+            <h1 class="modal-title fs-5">Add New Task</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="formAddTask">
+              <div class="mb-3">
+                <label for="addTaskTitle" class="form-label">Title</label>
+                <input type="text" class="form-control" id="addTaskTitle" />
+              </div>
+              <div class="mb-3">
+                <select class="form-select" id="selectProjectAdd">
+                  <option value="">Select Project</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="addTaskDesc" class="form-label">Description</label>
+                <textarea
+                  class="form-control"
+                  id="addTaskDesc"
+                  rows="3"
+                ></textarea>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-success">Add Task</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal add-task end -->
+    
+    <!-- modal edit-task start -->
+    <div class="modal fade" id="modalTaskEdit" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- toast danger start -->
+          <div class="toast align-items-center text-bg-danger position-fixed end-0 top-0" role="alert" aria-live="assertive" aria-atomic="true" id="toastLiveEdit">
+            <div class="d-flex">
+              <div class="toast-body" id="toastBodyEdit">
+              </div>
+              <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+          </div>
+          <!-- toast danger end -->
+          <div class="modal-header">
+            <h1 class="modal-title fs-5">Edit New Task</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="formEditTask">
+              <div class="mb-3">
+                <label for="editTaskTitle" class="form-label">Title</label>
+                <input type="text" class="form-control" id="editTaskTitle" />
+              </div>
+              <div class="mb-3">
+                <select class="form-select" id="selectProjectEdit">
+                  <option value="">Select Project</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="editTaskDesc" class="form-label">Description</label>
+                <textarea
+                  class="form-control"
+                  id="editTaskDesc"
+                  rows="3"
+                ></textarea>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" class="btn btn-primary">Edit Task</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal edit-task end -->
+    
+    <!-- modal delete-task start -->
+    <div class="modal fade" id="modalTaskDelete" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- toast danger start -->
+          <div class="toast align-items-center text-bg-danger position-fixed end-0 top-0" role="alert" aria-live="assertive" aria-atomic="true" id="toastLiveDelete">
+            <div class="d-flex">
+              <div class="toast-body" id="toastBodyDelete">
+              </div>
+              <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+          </div>
+          <!-- toast danger end -->
+    
+          <div class="modal-header">
+            <h1 class="modal-title fs-5">WARNING!</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p>Apakah Anda yakin menghapus Task ini?</p>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-danger" id="btnTaskDelete">Delete Task</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal delete-task end -->
+    {% endblock%} {% block script %}
+    <script src="{{url_for('static',filename='js/script-index.js')}}"></script>
+    {% endblock %}
