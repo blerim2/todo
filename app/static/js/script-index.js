@@ -103,3 +103,78 @@ window.addEventListener("load", function () {
           const btnEdit = document.createElement("button");
           const btnDelete = document.createElement("button");
           const btnDone = document.createElement("button");
+
+          // Set Attribute
+          cardWrap.setAttribute("class", "d-flex flex-column");
+          card.setAttribute("class", "card mb-3");
+          cardHeader.setAttribute(
+            "class",
+            "card-header d-flex justify-content-between"
+          );
+          cardTitle.setAttribute("class", "mb-0");
+          cardTitle.innerHTML = response[i].title;
+          selectProject.setAttribute("class", "badge text-bg-info mb-0");
+          cardBody.setAttribute("class", "card-body");
+          cardText.setAttribute("class", "card-text");
+          cardText.innerHTML = response[i].description;
+          btnWrap.setAttribute("class", "d-grid gap-2 d-md-block");
+          btnEdit.setAttribute("class", "btn btn-primary mx-1");
+          btnEdit.setAttribute("type", "button");
+          btnEdit.setAttribute("data-bs-toggle", "modal");
+          btnEdit.setAttribute("data-bs-target", "#modalTaskEdit");
+          btnEdit.setAttribute("data-title", response[i].title);
+          btnEdit.setAttribute("data-description", response[i].description);
+          btnEdit.setAttribute("data-id", response[i].id);
+          btnEdit.innerHTML = "EDIT";
+          btnDelete.setAttribute("class", "btn btn-danger mx-1");
+          btnDelete.setAttribute("type", "button");
+          btnDelete.setAttribute("data-bs-toggle", "modal");
+          btnDelete.setAttribute("data-bs-target", "#modalTaskDelete");
+          btnDelete.setAttribute("data-id", response[i].id);
+          btnDelete.innerHTML = "DELETE";
+          btnDone.setAttribute("type", "button");
+          btnDone.setAttribute("data-id", response[i].id);
+          btnDone.setAttribute("data-task-done", response[i].is_done);
+
+          // Append Child
+          btnWrap.appendChild(btnEdit);
+          btnWrap.appendChild(btnDelete);
+          btnWrap.appendChild(btnDone);
+          cardBody.appendChild(cardText);
+          cardBody.appendChild(btnWrap);
+          cardHeader.appendChild(cardTitle);
+          cardHeader.appendChild(selectProject);
+          card.appendChild(cardHeader);
+          card.appendChild(cardBody);
+          cardWrap.appendChild(card);
+
+          // get project title from localStorage
+          const projects = JSON.parse(localStorage.getItem("projects"));
+          for (let x = 0; x < projects.length; x++) {
+            if (response[i].project_id == projects[x].id) {
+              selectProject.innerHTML = projects[x].title;
+            }
+          }
+
+          // logic for finish and unfinish the task
+          if (response[i].is_done) {
+            btnDone.setAttribute("class", "btn btn-warning mx-1 btn-done");
+            btnDone.innerHTML = "UNFINISH";
+            doneItem.append(cardWrap);
+          } else {
+            btnDone.setAttribute("class", "btn btn-success mx-1 btn-done");
+            btnDone.innerHTML = "FINISH";
+            todoItem.append(cardWrap);
+          }
+        }
+
+        const btnDone = document.getElementsByClassName("btn-done");
+        for (let i = 0; i < btnDone.length; i++) {
+          btnDone[i].addEventListener("click", function (event) {
+            event.preventDefault();
+            const id = JSON.parse(this.dataset.id);
+            const taskDone = this.dataset.taskDone === "true";
+
+            const data = JSON.stringify({
+              is_done: !taskDone,
+            });
